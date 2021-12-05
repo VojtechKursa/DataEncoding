@@ -66,7 +66,7 @@ namespace DataEncoding.DER
         public DERDataType(byte[] encoded, int start)
         {
             TagClass = (byte)(encoded[start] >> 6);
-            Primitive = !Convert.ToBoolean(encoded[start] & 0b00100000 >> 5);
+            Primitive = !Convert.ToBoolean((encoded[start] & 0b00100000) >> 5);
 
             TypeNumber = ToInt(encoded, start);
         }

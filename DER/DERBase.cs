@@ -73,7 +73,7 @@ namespace DataEncoding.DER
                         result[result.Length - i] = (byte)((length >> ((i - 1) * 8)) & 0xFF);
                     }
 
-                    result[0] = bytesNeeded;
+                    result[0] = (byte)(bytesNeeded | 0x80);
 
                     return result;
                 }
@@ -86,6 +86,7 @@ namespace DataEncoding.DER
         /// Throws a <see cref="NotSupportedException"/> when the length of the length field takes more than 5 bytes. (i.e. The value field takes up more than 2^32 bytes)
         /// </summary>
         /// <param name="encoded">The encoded byte array that represents the DER encoded object.</param>
+        /// <param name="lengthStart">The index in encoded array at which the length field starts.</param>
         /// <returns>
         /// An array of <see cref="int"/>:<br />
         /// Index 0 - The length of the value field.<br />
