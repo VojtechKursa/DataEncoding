@@ -50,8 +50,16 @@ namespace DataEncoding.PEM
                         break;
                 }
 
-                currentBlock = new PEMBlock();
-                blockEnd = currentBlock.Decode(data, blockStart);
+                try
+                {
+                    currentBlock = new PEMBlockDER();
+                    blockEnd = currentBlock.Decode(data, blockStart);
+                }
+                catch (Exception)
+                {
+                    currentBlock = new PEMBlock();
+                    blockEnd = currentBlock.Decode(data, blockStart);
+                }
 
                 Blocks.Add(currentBlock);
             }
