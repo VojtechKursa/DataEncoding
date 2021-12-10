@@ -46,7 +46,7 @@ namespace DataEncoding.JSON
         #region List methods
 
         /// <summary>
-        /// Adds in item to the collection.
+        /// Adds an item to the collection.
         /// </summary>
         /// <param name="item">The item to add.</param>
         public void Add(JSONNameValuePair item) => Items.Add(item);
@@ -118,6 +118,16 @@ namespace DataEncoding.JSON
         #endregion
 
         #region Custom methods
+
+        /// <summary>
+        /// Adds new Name-Value pair to the collection.
+        /// </summary>
+        /// <param name="name">The name of the new value.</param>
+        /// <param name="value">The new value.</param>
+        public void Add(string name, JSONBase value)
+        {
+            Add(new JSONNameValuePair(name, value));
+        }
 
         /// <summary>
         /// Determines whether an item with the specified name is present in the collection.
