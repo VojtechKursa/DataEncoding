@@ -18,7 +18,7 @@ namespace DataEncoding.DER
         public int Length { protected set; get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Encoded"/> value. (Obtained after calling either <see cref="Encode()"/> or <see cref="Decode(byte[])"/> method).
+        /// Gets or sets the <see cref="Encoded"/> value. (Obtained after calling either <see cref="Encode()"/> or <see cref="Decode(byte[], int)"/> method).
         /// </summary>
         public byte[] Encoded { protected set; get; }
 
