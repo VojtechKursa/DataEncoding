@@ -32,10 +32,10 @@ namespace DataEncoding.JSON
             JSONString name = new JSONString();
             int nameEnd = name.Decode(json, start);
 
-            JSONBase value = JSONFunctions.GetDatatype(json, nameEnd + 1);
+            JSONBase value = JSONFunctions.GetDatatype(json, nameEnd + 1, out int dataStart);
             if (value != null)
             {
-                int result = value.Decode(json, nameEnd + 1);
+                int result = value.Decode(json, dataStart);
 
                 NameJSON = name;
                 Value = value;

@@ -22,10 +22,10 @@ namespace DataEncoding.JSON
             int lastEnd = start;
             while (true)
             {
-                dataType = GetDatatype(json, lastEnd);
+                dataType = GetDatatype(json, lastEnd, out int dataStart);
                 if (dataType != null)
                 {
-                    lastEnd = dataType.Decode(json, lastEnd);
+                    lastEnd = dataType.Decode(json, dataStart);
                     result.Add(dataType);
                 }
                 else
@@ -155,17 +155,18 @@ namespace DataEncoding.JSON
         /// <param name="json">The JSON string in which to search for data.</param>
         /// <param name="start">The index from which to start the search.</param>
         /// <returns>A JSON object that represents the detected datatype.</returns>
-        internal static JSONBase GetDatatype(string json, int start)
+        internal static JSONBase GetDatatype(string json, int start, out int dataStartIndex)
         {
             for (int i = start; i < json.Length; i++)
             {
                 switch (json[i])
                 {
-                    case '\"': return new JSONString();
-                    case '{': return new JSONObject();
+                    case '\"': dataStartIndex = i; return new JSONString();
+                    case '{': dataStartIndex = i; return new JSONObject();
                 }
             }
 
+            dataStartIndex = -1;
             return null;
         }
     }
