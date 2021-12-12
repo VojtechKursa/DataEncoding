@@ -55,18 +55,17 @@ namespace DataEncoding.JSON
         {
             string result = "";
 
-            foreach(char character in unescaped)
+            foreach (char character in unescaped)
             {
-                switch(character)
+                switch (character)
                 {
                     case '\"':
-                    case '\\':
-                    case '/': result += "\\" + character; break;
-                    case (char)0x8:result += "\\b"; break;
-                    case (char)0xC:result += "\\f";break;
-                    case (char)0xA:result += "\\n";break;
-                    case (char)0xD:result += "\\r";break;
-                    case (char)0x9:result += "\\t";break;
+                    case '\\': result += "\\" + character; break;
+                    case (char)0x8: result += "\\b"; break;
+                    case (char)0xC: result += "\\f"; break;
+                    case (char)0xA: result += "\\n"; break;
+                    case (char)0xD: result += "\\r"; break;
+                    case (char)0x9: result += "\\t"; break;
                     default:
                         if (character < 0x20)
                             result += UnicodeEscape(character);
@@ -95,21 +94,21 @@ namespace DataEncoding.JSON
                         {
                             case '\"':
                             case '\\':
-                            case '/':result += escaped[i + 1];break;
-                            case 'b':result += (char)0x8;break;
-                            case 'f':result += (char)0xC;break;
-                            case 'n':result += (char)0xA;break;
-                            case 'r':result += (char)0xD;break;
-                            case 't':result += (char)0x9;break;
+                            case '/': result += escaped[i + 1]; break;
+                            case 'b': result += (char)0x8; break;
+                            case 'f': result += (char)0xC; break;
+                            case 'n': result += (char)0xA; break;
+                            case 'r': result += (char)0xD; break;
+                            case 't': result += (char)0x9; break;
                             case 'u':
                                 bool isPair;
                                 result += UnicodeUnescape(escaped, i, out isPair);
-                                
+
                                 if (isPair)
                                     i += 10;
                                 else
                                     i += 4;
-                                
+
                                 break;
                             default:
                                 throw new ArgumentException("Unknown escape sequence detected.");
@@ -127,7 +126,7 @@ namespace DataEncoding.JSON
 
         private static string UnicodeEscape(char character)
         {
-            if(character > 0xFFFF)
+            if (character > 0xFFFF)
             {
                 int temp = character - 0x10000;
                 int highSurrogate = 0xD800 | ((temp & 0xFFC00) >> 10);
@@ -143,13 +142,13 @@ namespace DataEncoding.JSON
 
         private static char UnicodeUnescape(string sequence, int startIndex, out bool isPair)
         {
-            if(startIndex+6<sequence.Length)
+            if (startIndex + 6 < sequence.Length)
             {
-                if (sequence[startIndex] == '\\' && sequence[startIndex+1] == 'u')
+                if (sequence[startIndex] == '\\' && sequence[startIndex + 1] == 'u')
                 {
                     int character = Convert.ToInt32(sequence.Substring(startIndex + 2, 4), 16);
 
-                    if((character & 0xFC00) != 0xD800)
+                    if ((character & 0xFC00) != 0xD800)
                     {
                         isPair = false;
                         return (char)character;
@@ -188,7 +187,7 @@ namespace DataEncoding.JSON
                     throw new ArgumentException(nameof(sequence) + " doesn't start with sequence \\u");
             }
             else
-                throw new ArgumentOutOfRangeException("Position "+nameof(startIndex)+" in "+nameof(sequence)+" is not followed by enough characters to be an escaped Unicode character.");
+                throw new ArgumentOutOfRangeException("Position " + nameof(startIndex) + " in " + nameof(sequence) + " is not followed by enough characters to be an escaped Unicode character.");
         }
     }
 }

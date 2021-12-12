@@ -159,10 +159,29 @@ namespace DataEncoding.JSON
         {
             for (int i = start; i < json.Length; i++)
             {
+                dataStartIndex = i;
+
                 switch (json[i])
                 {
-                    case '\"': dataStartIndex = i; return new JSONString();
-                    case '{': dataStartIndex = i; return new JSONObject();
+                    case '\"': return new JSONString();
+                    case '{': return new JSONObject();
+                    case '[': return new JSONArray();
+                    case 't':
+                        if (json.Substring(i, 4) == "true")
+                            return new JSONBool();
+                        break;
+                    case 'f':
+                        if (json.Substring(i, 5) == "false")
+                            return new JSONBool();
+                        break;
+                    case 'n':
+                        if (json.Substring(i, 4) == "null")
+                            return new JSONNull();
+                        break;
+                    default:
+                        if ((json[i] >= 48 && json[i] <= 57) || json[i] == '+' || json[i] == '-')
+                            return new JSONNumber();
+                        break;
                 }
             }
 
