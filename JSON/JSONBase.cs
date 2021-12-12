@@ -8,12 +8,7 @@ namespace DataEncoding.JSON
     public abstract class JSONBase
     {
         /// <summary>
-        /// Gets or sets the encoded string.
-        /// </summary>
-        public string Encoded { get; protected set; }
-
-        /// <summary>
-        /// Encodes the data into the JSON format and sets it to the <see cref="Encoded"/> variable.
+        /// Encodes the data into the JSON format.
         /// </summary>
         /// <returns>The encoded string.</returns>
         public abstract string Encode();

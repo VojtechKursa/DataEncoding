@@ -31,7 +31,6 @@ namespace DataEncoding.JSON
             else
                 result = result.Remove(result.Length - 1) + "}";
 
-            Encoded = result;
             return result;
         }
 

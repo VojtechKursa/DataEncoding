@@ -18,7 +18,6 @@ namespace DataEncoding.JSON
         {
             string result = String.Format("\"{0}\"", Escape(Content));
 
-            Encoded = result;
             return result;
         }
 
