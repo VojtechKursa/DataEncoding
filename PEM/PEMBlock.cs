@@ -94,5 +94,21 @@ namespace DataEncoding.PEM
 
             return result;
         }
+
+        /// <summary>
+        /// Initiates a new instance of <see cref="PEMBlock"/> based on the decoded input data.
+        /// </summary>
+        /// <param name="data">The PEM data to decode.</param>
+        /// <param name="startIndex">The index from which to start decoding.</param>
+        /// <param name="end">The index at which the decoding process stopped (the index of the next character after the decoded value).</param>
+        /// <returns>The new instance of <see cref="PEMBlock"/> containing the decoded data.</returns>
+        /// <exception cref="ArgumentException"/>
+        public static PEMBlock FromEncoded(string data, int startIndex, out int end)
+        {
+            PEMBlock result = new PEMBlock();
+
+            end = result.Decode(data, startIndex);
+            return result;
+        }
     }
 }

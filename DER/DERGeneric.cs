@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DataEncoding.DER
 {
@@ -42,8 +42,6 @@ namespace DataEncoding.DER
             Array.Copy(lengthEncoded, 0, result, Type.TypeBytes.Length, lengthEncoded.Length);
             Array.Copy(content, 0, result, Type.TypeBytes.Length + lengthEncoded.Length, content.Length);
 
-            Encoded = result;
-
             return result;
         }
 
@@ -61,7 +59,7 @@ namespace DataEncoding.DER
 
             Array.Copy(encoded, valueStart, content, 0, Length);
 
-            return Type.TypeBytes.Length + lengthArrayLength + Length;
+            return valueStart + Length;
         }
     }
 }

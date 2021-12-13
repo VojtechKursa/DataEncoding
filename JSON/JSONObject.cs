@@ -55,9 +55,7 @@ namespace DataEncoding.JSON
                     break;
                 else
                 {
-                    JSONNameValuePair pair = new JSONNameValuePair();
-                    lastEnd = pair.Decode(objectString, nameStart);
-                    Content.Add(pair);
+                    Content.Add(JSONNameValuePair.FromEncoded(objectString, nameStart, out lastEnd));
                 }
             }
 

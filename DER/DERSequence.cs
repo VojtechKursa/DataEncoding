@@ -50,7 +50,6 @@ namespace DataEncoding.DER
                 }
             }
 
-            Encoded = result;
             Length = valuesLength;
 
             return result;
@@ -70,21 +69,13 @@ namespace DataEncoding.DER
 
                 int valueStartIndex = start + Type.TypeBytes.Length + lengthArrayLength;
 
-                int processed = 0;
-                DERBase currentObject;
-                while (processed < Length)
+                int lastEnd = valueStartIndex;
+                while (lastEnd < valueStartIndex + Length)
                 {
-                    switch (encoded[valueStartIndex + processed])
-                    {
-                        case 0x30: currentObject = new DERSequence(); break;
-                        default: currentObject = new DERGeneric(); break;
-                    }
-
-                    processed += currentObject.Decode(encoded, valueStartIndex + processed);
-                    Content.Add(currentObject);
+                    Content.Add(FromEncoded(encoded, lastEnd, out lastEnd));
                 }
 
-                return Type.TypeBytes.Length + lengthArrayLength + Length;
+                return lastEnd;
             }
         }
     }

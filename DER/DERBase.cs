@@ -7,6 +7,8 @@ namespace DataEncoding.DER
     /// </summary>
     public abstract class DERBase
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the <see cref="Type"/> of the DER object.
         /// </summary>
@@ -17,26 +19,48 @@ namespace DataEncoding.DER
         /// </summary>
         public int Length { protected set; get; }
 
-        /// <summary>
-        /// Gets or sets the <see cref="Encoded"/> value. (Obtained after calling either <see cref="Encode()"/> or <see cref="Decode(byte[], int)"/> method).
-        /// </summary>
-        public byte[] Encoded { protected set; get; }
+        #endregion
+
+        #region Methods
+        #region Abstract methods
 
         /// <summary>
-        /// Encodes the value currently stored inside the DER object into a DER byte array.<br />
-        /// Also sets the <see cref="Encoded"/> value of the object.
+        /// Encodes the value currently stored inside the DER object into a DER byte array.
         /// </summary>
         /// <returns>The encoded byte array.</returns>
         public abstract byte[] Encode();
 
         /// <summary>
         /// Decodes the given byte array into a value and sets it as Content to the given object.<br />
-        /// Also sets the <see cref="Encoded"/>, <see cref="Length"/> and <see cref="Type"/> values.
+        /// Also sets the <see cref="Length"/> and <see cref="Type"/> values.
         /// </summary>
         /// <param name="encoded">The byte array to decode.</param>
         /// <param name="start">An index in the encoded array from which the object starts.</param>
-        /// <returns>The amount of bytes used from the input during the decoding process (i.e. the total length of the T-L-V structure).</returns>
+        /// <returns>The index at which the decoding process stopped (the index of the next byte after the decoded value).</returns>
         public abstract int Decode(byte[] encoded, int start);
+
+        #endregion
+
+        #region Public static methods
+
+        /// <summary>
+        /// Creates a new instance of <see cref="DERBase"/> based on the input data.<br />
+        /// </summary>
+        /// <param name="encoded">The encoded data that contain the desired object.</param>
+        /// <param name="start">The index from which to start decoding (should be the index of the first byte of the type field).</param>
+        /// <param name="end">The index at which the decoding process stopped (the index of the next byte after the decoded value).</param>
+        /// <returns>A new instance of <see cref="DERBase"/> with the decoded value inside. (Retyping to the correct datatype is required to access the value).</returns>
+        public static DERBase FromEncoded(byte[] encoded, int start, out int end)
+        {
+            DERBase result = GetType(encoded, start);
+
+            end = result.Decode(encoded, start);
+            return result;
+        }
+
+        #endregion
+
+        #region Support methods
 
         /// <summary>
         /// Encodes the given length into a byte array that represents that length according to the DER standard.
@@ -121,5 +145,22 @@ namespace DataEncoding.DER
                 }
             }
         }
+
+        protected static DERBase GetType(byte[] encoded, int start)
+        {
+            DERDataType type = new DERDataType(encoded, start);
+            DERBase result;
+
+            switch (type.DataType)
+            {
+                case DataType.Sequence: result = new DERSequence(); break;
+                default: result = new DERGeneric(); break;
+            }
+
+            return result;
+        }
+
+        #endregion
+        #endregion
     }
 }

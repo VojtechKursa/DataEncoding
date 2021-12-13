@@ -8,12 +8,7 @@ namespace DataEncoding.PEM
     public abstract class PEMBase
     {
         /// <summary>
-        /// Gets or sets the encoded string.
-        /// </summary>
-        public string Encoded { get; protected set; }
-
-        /// <summary>
-        /// Encodes the data into the PEM format and sets it to the <see cref="Encoded"/> variable.
+        /// Encodes the data into the PEM format.
         /// </summary>
         /// <returns>The encoded string.</returns>
         public abstract string Encode();
@@ -23,7 +18,7 @@ namespace DataEncoding.PEM
         /// </summary>
         /// <param name="data">The PEM data to decode.</param>
         /// <param name="startIndex">The index from which to start decoding.</param>
-        /// <returns>The index at which the decoding process stopped.</returns>
+        /// <returns>The index at which the decoding process stopped (the index of the next character after the decoded value).</returns>
         /// <exception cref="ArgumentException"/>
         public abstract int Decode(string data, int startIndex);
     }

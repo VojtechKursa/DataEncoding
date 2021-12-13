@@ -18,15 +18,15 @@ namespace DataEncoding.JSON
         {
             List<JSONBase> result = new List<JSONBase>();
 
-            JSONBase dataType;
+            JSONBase decodedValue;
             int lastEnd = start;
             while (true)
             {
-                dataType = GetDatatype(json, lastEnd, out int dataStart);
-                if (dataType != null)
+                decodedValue = JSONBase.FromEncoded(json, lastEnd, out lastEnd);
+
+                if (decodedValue != null)
                 {
-                    lastEnd = dataType.Decode(json, dataStart);
-                    result.Add(dataType);
+                    result.Add(decodedValue);
                 }
                 else
                     break;
@@ -154,6 +154,7 @@ namespace DataEncoding.JSON
         /// </summary>
         /// <param name="json">The JSON string in which to search for data.</param>
         /// <param name="start">The index from which to start the search.</param>
+        /// <param name="dataStartIndex">The index from which the detected datatype starts.</param>
         /// <returns>A JSON object that represents the detected datatype.</returns>
         internal static JSONBase GetDatatype(string json, int start, out int dataStartIndex)
         {

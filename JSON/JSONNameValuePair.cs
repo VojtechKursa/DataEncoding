@@ -45,5 +45,13 @@ namespace DataEncoding.JSON
             else
                 throw new ArgumentException("Value not found in " + nameof(json) + ".");
         }
+
+        public static JSONNameValuePair FromEncoded(string json, int start, out int end)
+        {
+            JSONNameValuePair result = new JSONNameValuePair();
+
+            end = result.Decode(json, start);
+            return result;
+        }
     }
 }

@@ -102,5 +102,21 @@ namespace DataEncoding.PEM
 
             return index != -1 ? Blocks[index] : null;
         }
+
+        /// <summary>
+        /// Initiates a new instance of <see cref="PEMSuperBlock"/> based on the decoded input data.
+        /// </summary>
+        /// <param name="data">The PEM data to decode.</param>
+        /// <param name="startIndex">The index from which to start decoding.</param>
+        /// <param name="end">The index at which the decoding process stopped (the index of the next character after the decoded value).</param>
+        /// <returns>The new instance of <see cref="PEMSuperBlock"/> containing the decoded data.</returns>
+        /// <exception cref="ArgumentException"/>
+        public static PEMSuperBlock FromEncoded(string data, int startIndex, out int end)
+        {
+            PEMSuperBlock result = new PEMSuperBlock();
+
+            end = result.Decode(data, startIndex);
+            return result;
+        }
     }
 }

@@ -30,7 +30,6 @@ namespace DataEncoding.JSON
                 return result.Remove(result.Length - 1) + "]";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0018:Inline variable declaration", Justification = "Inline variable declaration undesired.")]
         public override int Decode(string json, int start)
         {
             int arrayStart = json.IndexOf('[', start);
@@ -43,26 +42,24 @@ namespace DataEncoding.JSON
                     string arrayStr = json.Substring(arrayStart + 1, arrayEnd - arrayStart - 1);
 
                     int lastEnd = 0;
-                    int valueStart;
                     JSONBase value;
 
                     while (true)
                     {
-                        value = JSONFunctions.GetDatatype(arrayStr, lastEnd, out valueStart);
+                        value = FromEncoded(arrayStr, lastEnd, out lastEnd);
 
                         if (value != null)
                         {
-                            lastEnd = value.Decode(arrayStr, valueStart);
                             Content.Add(value);
                         }
                         else
                             break;
                     }
+
+                    return arrayEnd + 1;
                 }
                 else
                     throw new ArgumentException("End of array not found.");
-
-                return arrayEnd + 1;
             }
             else
                 throw new ArgumentException("No array found in " + nameof(json) + ".");
