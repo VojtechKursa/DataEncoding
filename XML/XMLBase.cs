@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace DataEncoding.XML
 {
@@ -77,7 +77,7 @@ namespace DataEncoding.XML
                                 result = result.Remove(result.Length - (tabCount - (depth - 1)));
                         }
 
-                        if (i - 1 > -1)
+                        if (result.Length > 0)
                         {
                             if (result[result.Length - 1] != '\t' && result[result.Length - 1] != '\n' && result[result.Length - 1] != '\r')
                                 result += Environment.NewLine + MultiplyString("\t", depth - 1);
