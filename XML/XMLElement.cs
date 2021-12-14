@@ -11,7 +11,7 @@ namespace DataEncoding.XML
         /// <summary>
         /// Represents all contents of the <see cref="XMLElement"/>.
         /// </summary>
-        public List<XMLBase> Content { get; set; } = new List<XMLBase>();
+        public XMLContentCollection Content { get; set; } = new XMLContentCollection();
 
         public XMLElement()
         { }
@@ -28,7 +28,7 @@ namespace DataEncoding.XML
 
         public XMLElement(string name, IEnumerable<XMLBase> content) : this(name)
         {
-            Content.AddRange(content);
+            Content.Items.AddRange(content);
         }
 
         public override string Encode()
