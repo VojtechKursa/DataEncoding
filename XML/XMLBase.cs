@@ -72,7 +72,7 @@ namespace DataEncoding.XML
 
                             int tabCount = CountFromEnd(result, '\t');
                             if (tabCount > depth - 1)
-                                result = RemoveFromEnd(result, tabCount - (depth - 1));
+                                result = result.Remove(result.Length - (tabCount - (depth - 1)));
                         }
 
                         if (i - 1 > -1)
@@ -255,7 +255,7 @@ namespace DataEncoding.XML
             string result = xml;
             int startIndex, endIndex;
 
-            while(true)
+            while (true)
             {
                 startIndex = result.IndexOf("<?");
 
@@ -296,18 +296,6 @@ namespace DataEncoding.XML
             }
 
             return text.Length;
-        }
-
-        private static string RemoveFromEnd(string text, int count)
-        {
-            string result = text;
-
-            for (int i = 0; i < count; i++)
-            {
-                result = result.Remove(result.Length - 1);
-            }
-
-            return result;
         }
 
         #endregion
