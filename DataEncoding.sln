@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncoding", "DataEncoding.csproj", "{7019CD10-781E-4D27-B9EB-4772EA427561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{84C5D4A1-6AB5-41A1-9BCF-F10B923FA3CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7019CD10-781E-4D27-B9EB-4772EA427561}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7019CD10-781E-4D27-B9EB-4772EA427561}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7019CD10-781E-4D27-B9EB-4772EA427561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C5D4A1-6AB5-41A1-9BCF-F10B923FA3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C5D4A1-6AB5-41A1-9BCF-F10B923FA3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C5D4A1-6AB5-41A1-9BCF-F10B923FA3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C5D4A1-6AB5-41A1-9BCF-F10B923FA3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
