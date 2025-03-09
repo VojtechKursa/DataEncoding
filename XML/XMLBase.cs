@@ -1,11 +1,12 @@
 ﻿using System;
+using DataEncoding.Interfaces;
 
 namespace DataEncoding.XML
 {
     /// <summary>
     /// Represents the base class for all objects representing XML data.
     /// </summary>
-    public abstract class XMLBase
+    public abstract class XMLBase : ISupportsEncode<string>, ISupportsDecode<string>
     {
         #region Proprties
 
@@ -22,6 +23,16 @@ namespace DataEncoding.XML
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Decodes the given XML encoded text starting at the given index and sets the object's values based on the decoded data.<br/>
+        /// Throws an <see cref="ArgumentException"/> if no valid text was found (tag in case of <see cref="XMLElement"/>. <see cref="XMLString"/> decodes anything.)
+        /// </summary>
+        /// <param name="xml">The XML encoded text to decode.</param>
+        /// <returns>The index in the xml at which the decoding stopped (the index of the first character after the decoded value).</returns>
+        /// <exception cref="ArgumentException"/>
+        public int Decode(string xml) => Decode(xml, 0);
+
         #region Abstract methods
 
         /// <summary>
@@ -30,14 +41,8 @@ namespace DataEncoding.XML
         /// <returns>A string, representing the encoded XML object.</returns>
         public abstract string Encode();
 
-        /// <summary>
-        /// Decodes the given XML encoded text starting at the given index and sets the object's values based on the decoded data.<br/>
-        /// Throws an <see cref="ArgumentException"/> if no valid text was found (tag in case of <see cref="XMLElement"/>. <see cref="XMLString"/> decodes anything.)
-        /// </summary>
-        /// <param name="xml">The XML encoded text to decode.</param>
+        /// <inheritdoc cref="Decode(string)"/>
         /// <param name="start">The index at which to start decoding.</param>
-        /// <returns>The index in the xml at which the decoding stopped (the index of the first character after the decoded value).</returns>
-        /// <exception cref="ArgumentException"/>
         public abstract int Decode(string xml, int start);
 
         #endregion
