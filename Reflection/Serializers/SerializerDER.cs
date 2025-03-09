@@ -6,9 +6,9 @@ using DataEncoding.Reflection.Data;
 
 namespace DataEncoding.Reflection.Serializers
 {
-    public class SerializerDER : Serializer<byte[], DERBase>
+    public class SerializerDER : Serializer<byte[], DERSequence>
     {
-        internal override DERBase SerializeInternal(string _, List<Tuple<PropertySerializationData, object>> properties)
+        internal override DERSequence SerializeInternal(string _, List<Tuple<PropertySerializationData, object>> properties)
         {
             List<DERBase> contents = new List<DERBase>();
 

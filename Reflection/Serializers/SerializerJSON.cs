@@ -5,9 +5,9 @@ using DataEncoding.Reflection.Data;
 
 namespace DataEncoding.Reflection.Serializers
 {
-    public class SerializerJSON : Serializer<string, JSONBase>
+    public class SerializerJSON : Serializer<string, JSONObject>
     {
-        internal override JSONBase SerializeInternal(string _, List<Tuple<PropertySerializationData, object>> properties)
+        internal override JSONObject SerializeInternal(string _, List<Tuple<PropertySerializationData, object>> properties)
         {
             JSONNameValuePairCollection collection = new JSONNameValuePairCollection();
 
@@ -29,7 +29,11 @@ namespace DataEncoding.Reflection.Serializers
             {
                 return new JSONBool(b);
             }
-            else if (value.IsNumeric())
+            else if (value.IsInteger())
+            {
+                return new JSONNumber((long)value);
+            }
+            else if (value.IsFloat())
             {
                 return new JSONNumber((double)value);
             }
@@ -48,7 +52,7 @@ namespace DataEncoding.Reflection.Serializers
             }
             else
             {
-                throw new Exception();
+                return new JSONString($"{value}");
             }
         }
     }

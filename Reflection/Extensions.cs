@@ -14,10 +14,6 @@ namespace DataEncoding.Reflection
         {
             typeof(float), typeof(double)
         };
-        private static readonly HashSet<Type> numeric = new HashSet<Type>(integers.Union(floats));
-
-        public static bool IsNumeric(this Type type) => numeric.Contains(type);
-        public static bool IsNumeric(this object obj) => IsNumeric(obj.GetType());
 
         public static bool IsInteger(this Type type) => integers.Contains(type);
         public static bool IsInteger(this object obj) => IsInteger(obj.GetType());
