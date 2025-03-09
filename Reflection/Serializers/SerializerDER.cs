@@ -6,13 +6,9 @@ using DataEncoding.Reflection.Data;
 
 namespace DataEncoding.Reflection.Serializers
 {
-    public class SerializerDER : Serializer<byte[]>
+    public class SerializerDER : Serializer<byte[], DERBase>
     {
-        public override byte[] Serialize(object obj) => GetSequence(obj).Encode();
-
-        internal DERSequence GetSequence(object obj) => GetSequence(GetPropertyValuePairs(obj));
-
-        internal DERSequence GetSequence(IEnumerable<Tuple<PropertySerializationData, object>> properties)
+        internal override DERBase SerializeInternal(string _, List<Tuple<PropertySerializationData, object>> properties)
         {
             List<DERBase> contents = new List<DERBase>();
 
@@ -45,7 +41,7 @@ namespace DataEncoding.Reflection.Serializers
                 else if (value.IsCollection())
                     dataType = new DERDataType(0, false, DataType.Sequence);
                 else if (value.GetType().IsClass)
-                    return GetSequence(value);
+                    return SerializeInternal(value);
                 else
                     throw new Exception();
             }

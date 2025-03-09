@@ -2,22 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DataEncoding.Interfaces;
 using DataEncoding.Reflection.Adapters.DataMembers;
 using DataEncoding.Reflection.Attributes;
 using DataEncoding.Reflection.Data;
+using DataEncoding.Reflection.Exceptions;
 
 namespace DataEncoding.Reflection.Serializers
 {
-    public abstract class Serializer<TSerialized>
+    public abstract class Serializer<TSerialized, TInternal> where TInternal : ISupportsEncode<TSerialized>
     {
         private static readonly Dictionary<TypeInfo, StructureSerializationData> cache = new Dictionary<TypeInfo, StructureSerializationData>();
+        private readonly HashSet<object> visited = new HashSet<object>();
 
-        public abstract TSerialized Serialize(object obj);
+        public virtual TSerialized Serialize(object obj)
+        {
+            TSerialized result = SerializeInternal(obj).Encode();
+
+            visited.Clear();
+
+            return result;
+        }
+
+        internal TInternal SerializeInternal(object obj)
+        {
+            if (visited.Contains(obj))
+                throw new LoopException();
+
+            visited.Add(obj);
+
+            return SerializeInternal(GetStructureName(obj), GetPropertyValuePairs(obj));
+        }
+        internal abstract TInternal SerializeInternal(string classname, List<Tuple<PropertySerializationData, object>> properties);
 
         internal static string GetStructureName(object obj) => GetStructureName(obj.GetType());
         internal static string GetStructureName(Type type) => GetStructureSerializationData(type.GetTypeInfo()).Name;
 
-        internal static List<Tuple<PropertySerializationData, object>> GetPropertyValuePairs(object obj)
+        private static List<Tuple<PropertySerializationData, object>> GetPropertyValuePairs(object obj)
         {
             Type type = obj.GetType();
             var properties = GetStructureSerializationData(type.GetTypeInfo());

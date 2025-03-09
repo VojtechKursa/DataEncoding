@@ -1,11 +1,12 @@
 ﻿using System;
+using DataEncoding.Interfaces;
 
 namespace DataEncoding.DER
 {
     /// <summary>
     /// Represents the base of all DER objects in the DataEncoding library.
     /// </summary>
-    public abstract class DERBase
+    public abstract class DERBase : ISupportsEncode<byte[]>, ISupportsDecode<byte[]>
     {
         #region Properties
 
@@ -35,8 +36,11 @@ namespace DataEncoding.DER
         /// Also sets the <see cref="Length"/> and <see cref="Type"/> values.
         /// </summary>
         /// <param name="encoded">The byte array to decode.</param>
-        /// <param name="start">An index in the encoded array from which the object starts.</param>
         /// <returns>The index at which the decoding process stopped (the index of the next byte after the decoded value).</returns>
+        public int Decode(byte[] encoded) => Decode(encoded, 0);
+
+        /// <inheritdoc cref="Decode(byte[])"/>
+        /// <param name="start">An index in the encoded array from which the object starts.</param>
         public abstract int Decode(byte[] encoded, int start);
 
         #endregion
