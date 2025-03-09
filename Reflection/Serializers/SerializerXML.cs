@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataEncoding.Reflection.Data;
-using DataEncoding.XML;
 using DataEncoding.Reflection.Exceptions;
+using DataEncoding.XML;
 
 namespace DataEncoding.Reflection.Serializers
 {

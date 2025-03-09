@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace DataEncoding.Reflection.Adapters.DataMembers
 {
     internal class DataMemberProperty : IDataMemberInfo
     {
-        PropertyInfo property;
+        private PropertyInfo property;
 
         public DataMemberProperty(PropertyInfo property)
         {

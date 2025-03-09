@@ -155,10 +155,7 @@ namespace DataEncoding.XML
         /// </summary>
         /// <param name="xml">The XML string to minify.</param>
         /// <returns>The minified XML string.</returns>
-        public static string Minify(string xml)
-        {
-            return Beautify(xml).Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" />", "/>");
-        }
+        public static string Minify(string xml) => Beautify(xml).Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" />", "/>");
 
         #endregion
 
