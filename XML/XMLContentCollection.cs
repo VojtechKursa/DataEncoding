@@ -118,6 +118,15 @@ namespace DataEncoding.XML
         }
 
         #endregion
+
+        public XMLString GetXMLString()
+        {
+            if (Items.Count == 1 && Items[0] is XMLString s)
+                return s;
+            else
+                return null;
+        }
+
         #endregion
     }
 }

@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DataEncoding.XML
 {
@@ -12,6 +13,8 @@ namespace DataEncoding.XML
         /// Represents all contents of the <see cref="XMLElement"/>.
         /// </summary>
         public XMLContentCollection Content { get; set; } = new XMLContentCollection();
+
+        public string Body => EncodeBody();
 
         public XMLElement()
         { }
@@ -44,10 +47,7 @@ namespace DataEncoding.XML
             {
                 result += ">";
 
-                foreach (XMLBase elem in Content)
-                {
-                    result += elem.Encode();
-                }
+                result += EncodeBody();
 
                 result += String.Format("</{0}>", XMLString.Encode(Name));
             }
@@ -55,6 +55,18 @@ namespace DataEncoding.XML
                 result += "/>";
 
             return result;
+        }
+
+        public string EncodeBody()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            foreach (XMLBase elem in Content)
+            {
+                builder.Append(elem.Encode());
+            }
+
+            return builder.ToString();
         }
 
         public override int Decode(string xml, int start)
