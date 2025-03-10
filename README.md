@@ -76,7 +76,7 @@ class A
     private int C => 3;
 }
 
-SerializerJSON.Serialize(new A());  // Result: {"A":1,"F":3}
+SerializerJSON.Serialize(new A());  // Result: {"a":1,"F":3}
 ```
 
 ## License
