@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace DataEncoding.JSON
 {
@@ -28,21 +29,9 @@ namespace DataEncoding.JSON
 
             if (numberStr != null)
             {
-                numberStr = numberStr.Replace('.', ',').Replace('E', 'e');
+                numberStr = numberStr.Replace(".", NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
 
-                if (numberStr.Contains("e"))
-                {
-                    string[] numbers = numberStr.Split('e');
-
-                    if (numbers.Length > 2)
-                        throw new ArgumentException("The detected number has more than one exponent.");
-
-                    Content = Convert.ToDouble(numbers[0]) * Math.Pow(10, Convert.ToDouble(numbers[1]));
-                }
-                else
-                {
-                    Content = Convert.ToDouble(numberStr);
-                }
+                Content = double.Parse(numberStr, NumberStyles.Float);
 
                 return lastIndex + 1;
             }
