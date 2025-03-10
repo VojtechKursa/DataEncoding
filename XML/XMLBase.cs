@@ -220,7 +220,12 @@ namespace DataEncoding.XML
                     }
                     else
                     {
-                        int endOfContent = xml.IndexOf(String.Format("</{0}", name), openingTagEnd + 1);
+                        int previousOpeningTag = openingTagEnd + 1;
+                        int anotherOpeningTag = xml.IndexOf($"<{name}", previousOpeningTag);
+                        int endOfContent = xml.IndexOf(String.Format("</{0}", name), previousOpeningTag);
+
+                        if (anotherOpeningTag != -1 && anotherOpeningTag < endOfContent)
+                            throw new NotImplementedException("Nested tags with identical names aren't supported yet.");
 
                         end = xml.IndexOf(">", endOfContent + 2) + 1;
 

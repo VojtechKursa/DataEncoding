@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -97,7 +97,7 @@ namespace DataEncoding.XML
                     }
                     else
                     {
-                        if (lastEnd != contentStr.Length - 1)
+                        if (lastEnd < contentStr.Length - 1)
                         {
                             Content.Add(XMLString.FromEncoded(contentStr.Substring(lastEnd, contentStr.Length - lastEnd)));
                         }
